@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	tf "github.com/tensorflow/tensorflow/tensorflow/go"
 	"github.com/tensorflow/tensorflow/tensorflow/go/op"
@@ -12,17 +13,17 @@ func main() {
 	c := op.Const(s, "Hello from TensorFlow version "+tf.Version())
 	graph, err := s.Finalize()
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	// Execute the graph in a session
 	sess, err2 := tf.NewSession(graph, nil)
 	if err2 != nil {
-		panic(err2)
+		log.Fatal(err2)
 	}
 	output, err3 := sess.Run(nil, []tf.Output{c}, nil)
 	if err3 != nil {
-		panic(err3)
+		log.Fatal(err3)
 	}
 	fmt.Println(output[0].Value())
 }
